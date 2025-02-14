@@ -116,7 +116,8 @@ class Adventurer {
   }
     roll(mod = 0) { //maybe use it as attack power?
       const result = Math.floor(Math.random() * 20) + 1 + mod;
-      console.log(`${this.name} rolled a ${result}.`);      
+      console.log(`${this.name} rolled a ${result}.`);    
+      return result;  // I forgot to return this and it became an infinite loop bc it was undifined... lol
   }
  duel (opponent) {
     console.log(`${this.name} vs ${opponent.name}`);
@@ -132,7 +133,7 @@ class Adventurer {
         opponent.health -= 1;
         console.log(`${this.name} attacked! ${opponent.name}'s health: ${opponent.health}`);      
       } else if (myRoll < opponentRoll) {
-        this.health -= 1;
+        this.health -= 1; //minus the result of the rolled dice
         console.log(`${opponent.name} attacked! ${this.name}'s health: ${this.health}`);
       } else {
         console.log("It's a draw! Rolling again!");       
@@ -172,13 +173,14 @@ class AdventurerFactory {
 
 const healers = new AdventurerFactory("Healer");
 const fighters = new AdventurerFactory("Fighter");
-
+const warrior = new AdventurerFactory("Warrior")
 
 const fabio = healers.generate("Fabio");
 const elio = fighters.generate("Elio");
+const dorma = warrior.generate("Dorma")
 
 
 fabio.scout(); 
 elio.scout(); 
-
-// duel(elio);
+dorma.scout();
+dorma.duel(elio);  // how to use random name vs opponent?!
